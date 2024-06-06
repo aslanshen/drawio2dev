@@ -1,0 +1,92 @@
+#wrapper>div{
+    margin-top: 21px;
+    background-color: #f1f1f1!important;
+}
+.recTable td, .recTable th, .table td, .table th {
+    padding: 0.45rem;
+    vertical-align: middle;
+}
+
+.list-group-item {
+    border: 0px solid rgba(0, 0, 0, .125);
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    border-radius: 8px;
+    background-color: #9a9a9a1a;
+}
+
+.myFile > div:nth-child(1), .myFile > div:nth-child(2), .myFile > div:nth-child(3) {
+    /*width: 1636px;*/
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+table tbody {
+    display: block;
+    height: 735px;
+    overflow-y: auto;
+}
+
+table thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+tbody tr span {
+    display: none;
+    float: right;
+}
+
+
+.table-temp > tbody > tr span, tbody tr svg {
+    cursor: pointer;
+}
+
+
+.btn-list-group {
+    position: relative;
+}
+
+.btn-list-area {
+    width: 90px;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: -32px;
+    right: 0;
+}
+
+.table-temp > tbody > tr:hover .btn-list-group, .btn-list-group:hover .btn-list-area {
+    display: block;
+}
+
+.btn-list-area > a {
+    padding: 9px;
+    text-align: center;
+}
+
+.btn-list-area > a:hover {
+    background-color: #d8d8d8;
+}
+
+.table thead th {
+    border-bottom: 0px solid #dee2e6;
+}
+
+.table tbody tr td:nth-child(2), .table tbody tr td:nth-child(3), .table tbody tr td:nth-child(4), .table thead tr th:nth-child(4), .table thead tr th:nth-child(2), .table thead tr th:nth-child(3) {
+    /*width: 350px;*/
+}
+
+
+
+
+
+

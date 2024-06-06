@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线生物图绘制 - BioVisArt</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="msapplication-config" content="images/browserconfig.xml">
+    <meta name="mobile-web-app-capable" content="no">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap3.css">
+    <link rel="stylesheet" type="text/css" href="js/croppie/croppie.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/grapheditor.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/toastr.min.css">
+    <link rel="shortcut icon" href="../../img/sangerbox/yjdslogo.png">
+    <style type="text/css">
+        .splitLine{
+            border-right: 1px solid #dee2e6;
+        }
+        #email,#suggestions{width: 95%!important;}
+    </style>
+
+    <script type="text/vbscript">
+			Function mxUtilsBinaryToArray(Binary)
+				Dim i
+				ReDim byteArray(LenB(Binary))
+				For i = 1 To LenB(Binary)
+					byteArray(i-1) = AscB(MidB(Binary, i, 1))
+				Next
+				mxUtilsBinaryToArray = byteArray
+			End Function
+    </script>
+
+</head>
+<body class="geEditor">
+<div id="geInfo">
+    <div class="geBlock" style="text-align:center;min-width:50%;">
+        <h2>初次加载较慢,请耐心等待...</h2>
+        <img src="img/sangerbox/loading.gif">
+    </div>
+</div>
+<script type="text/javascript">
+    var urlParams = (function () {
+        var result = new Object();
+        var params = window.location.search.slice(1).split('&');
+
+        for (var i = 0; i < params.length; i++) {
+            idx = params[i].indexOf('=');
+
+            if (idx > 0) {
+                result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+            }
+        }
+
+        result['dev'] = '1';
+        return result;
+    })();
+
+    // 桌面的全局变量
+    var mxIsElectron = window && window.process && window.process.type;
+
+    /**
+     * 将meta标签添加到页面.
+     */
+    function mxmeta(name, content, httpEquiv) {
+        try {
+            var s = document.createElement('meta');
+
+            if (name != null) {
+                s.setAttribute('name', name);
+            }
+
+            s.setAttribute('content', content);
+
+            if (httpEquiv != null) {
+                s.setAttribute('http-equiv', httpEquiv);
+            }
+
+            var t = document.getElementsByTagName('meta')[0];
+            t.parentNode.insertBefore(s, t);
+        } catch (e) {
+
+        }
+    };
+
+    /**
+     * 同步添加脚本到页面.
+     */
+    function mxscript(src, onLoad, id, dataAppKey, noWrite) {
+        var defer = onLoad == null && !noWrite;
+            document.write('<script src="' + src + '"' + ((id != null) ? ' id="' + id + '" ' : '') +
+                ((dataAppKey != null) ? ' data-app-key="' + dataAppKey + '" ' : '') + '></scr' + 'ipt>');
+    };
+
+    /**
+     * 异步将脚本添加到页面.
+     */
+    function mxinclude(src) {
+        var g = document.createElement('script');
+        g.type = 'text/javascript';
+        g.async = true;
+        g.src = src;
+
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(g, s);
+    };
+
+    /**
+     * 添加具有应用程序名称的元标记（取决于脱机URL参数）
+     */
+    (function () {
+        if (mxIsElectron) {
+            mxmeta(null, 'default-src \'self\' \'unsafe-inline\'; connect-src \'self\' https://*.draw.io https://fonts.googleapis.com https://fonts.gstatic.com; img-src * data:; media-src *; font-src *; style-src-elem \'self\' \'unsafe-inline\' https://fonts.googleapis.com', 'Content-Security-Policy');
+        }
+    })();
+
+    // 检查本地存储bnm
+    var isLocalStorage = false;
+
+    try {
+        isLocalStorage = urlParams['local'] != '1' && typeof (localStorage) != 'undefined';
+    } catch (e) {
+        // ignored
+    }
+
+    var t0 = new Date();
+
+    var mxDevUrl = 'http://' + location.host;
+
+    var drawDevUrl = 'http://' + location.host + '/';
+    var geBasePath = drawDevUrl + 'js/grapheditor';
+    var mxBasePath = mxDevUrl + '/mxgraph';
+
+    if (document.location.protocol == 'file:') {
+        geBasePath = './js/grapheditor';
+        mxBasePath = './mxgraph';
+        drawDevUrl = './';
+
+        mxForceIncludes = true;
+    }
+
+    mxscript(drawDevUrl + 'js/PreConfig.js');
+    mxscript(drawDevUrl + 'js/diagramly/Init.js');
+    mxscript(geBasePath + '/Init.js');
+    mxscript(drawDevUrl + 'mxgraph/mxClient.js');
+
+    //添加所有依赖于mxClient的JS代码。这种通过Devel.js的间接方式是
+    //在某些浏览器中需要确保mxClient.js(及其
+    //异步加载)在Devel.js中加载的代码运行时可用。
+    mxscript(drawDevUrl + 'js/diagramly/Devel.js');
+
+    if (mxIsElectron) {
+        mxscript('js/diagramly/DesktopLibrary.js');
+        mxscript('js/diagramly/ElectronApp.js');
+    }
+
+    mxscript(drawDevUrl + 'js/PostConfig.js');
+
+
+    // 添加基本​​的错误处理
+    window.onerror = function () {
+        var status = document.getElementById('geStatus');
+
+        if (status != null) {
+            status.innerHTML = '无法加载页面。请尝试刷新.';
+        }
+    };
+</script>
+
+<div class="geDialog" style="width: 640px; height: auto; left: 608px; top: 120px; z-index: 10004;">
+    <div style="height: 100%; max-height: 100%; overflow: hidden auto;">
+        <div style="white-space: nowrap; height: 40px;">文件名:
+            <input value="未命名图库.xml" style="margin-right: 20px; margin-left: 10px; width: 500px;">
+        </div>
+        <div style="position: absolute; width: 640px; top: 260px; text-align: center; font-size: 22px; color: rgb(160, 195, 255);">把图像拖至此处</div>
+        <div style="border-width: 1px 0px; border-color: rgb(211, 211, 211); border-style: solid; margin-top: 6px; overflow: auto; height: 340px; background-position: center center; background-repeat: no-repeat; background-image: url(&quot;images/droptarget.png&quot;);"></div>
+        <div style="text-align: right; margin-top: 20px;"><button id="btnCancel" class="geBtn">取消</button>
+            <button id="btnAddImage" class="geBtn">导入</button>
+            <button id="btnSave" class="geBtn gePrimaryBtn">保存</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="coopModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static"
+     data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加协作成员</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">
+                        <label class="col-form-label" style="font-size: 16px;">邀请成员</label>
+                        <input type="text" autofocus class="form-control" id="coopName" maxlength="11">
+
+                        <button type="button" class="btn btn-primary" id="coopSureBut">确 定</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <table class="coopTeam table-striped">
+                        <label class="">协作成员</label>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="shortcutsModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static"
+     data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px;max-width: 1053px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">快捷键</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div >
+                    <div class="form-group">
+                        <table class="table table-sm">
+                            <tbody>
+                            <tr>
+                                <th scope="col" colspan="2" class="splitLine">编辑文本</th>
+                                <th scope="col" colspan="6">工具</th>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+B / I</b></td>
+                                <td class="splitLine">粗体/斜体</td>
+                                <td><b>Ctrl+X</b></td>
+                                <td class="splitLine">剪切</td>
+                                <td><b>Alt+Shift+L</b></td>
+                                <td class="splitLine">编辑链接</td>
+                                <td><b>Alt+Shift+C </b></td>
+                                <td> 清除航点</td>
+                            <tr>
+                                <td><b>Ctrl+U</b></td>
+                                <td class="splitLine">下划线</td>
+                                <td><b>Ctrl+C</b></td>
+                                <td class="splitLine">复制</td>
+                                <td><b>Ctrl+D</b></td>
+                                <td class="splitLine">复制图标</td>
+                                <td><b>Alt+Shift+T </b></td>
+                                <td> 编辑提示</td>
+                            <tr>
+                                <td><b>Ctrl+. / ,</b></td>
+                                <td class="splitLine">上/下标</td>
+                                <td><b>Ctrl+V</b></td>
+                                <td class="splitLine">粘贴</td>
+                                <td><b>Ctrl+R </b></td>
+                                <td class="splitLine"> 顺时针旋转 90°</td>
+                                <td><b>Ctrl+Shift+拖动</b></td>
+                                <td>空间移动</td>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+Shift+X</b></td>
+                                <td class="splitLine">插入文本</td>
+                                <td><b>Ctrl+(Shift+)A</b></td>
+                                <td class="splitLine">全选</td>
+                                <td><b>Ctrl+Home </b></td>
+                                <td class="splitLine"> 折叠容器</td>
+                                <td><b>Ctrl+P</b></td>
+                                <td>打印</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="col"  colspan="2" class="splitLine">窗口</th>
+                                <td><b>Ctrl+Shift+I / E</b></td>
+                                <td class="splitLine">选择顶点/边</td>
+                                <td><b>Ctrl+End </b></td>
+                                <td class="splitLine"> 展开容器</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+Shift+O</b></td>
+                                <td class="splitLine">缩略图</td>
+                                <td><b>Ctrl / Shift+单击</b></td>
+                                <td class="splitLine">多选</td>
+                                <td><b>Ctrl+Shift+Home </b></td>
+                                <td class="splitLine"> 退出组</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+Shift+L</b></td>
+                                <td class="splitLine">显示图层窗口</td>
+                                <td><b>Ctrl+G</b></td>
+                                <td class="splitLine">组</td>
+                                <td><b>Ctrl+Shift+End </b></td>
+                                <td class="splitLine"> 进入组</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+M</b></td>
+                                <td class="splitLine">编辑数据属性</td>
+                                <td><b>Ctrl+Shift+U </b></td>
+                                <td class="splitLine">取消组合</td>
+                                <td><b>Ctrl+Shift+B </b></td>
+                                <td class="splitLine"> 移至最后</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Ctrl+Shift+P</b></td>
+                                <td class="splitLine">显示格式面板</td>
+                                <td><b>Ctrl+L</b></td>
+                                <td class="splitLine">锁定/解锁</td>
+                                <td><b>Ctrl+Shift+F </b></td>
+                                <td class="splitLine"> 移至最前</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer temp-foot">
+                <button type="button" class="btn btn-primary " data-dismiss="modal" aria-label="Close">确 定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tempModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static"
+     data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px;max-width: 600px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">发布模板</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group" style="flex-wrap: wrap;justify-content: center;">
+                        <label class="col-form-label" style="font-size: 16px;">模板标题</label>
+                        <input type="text" autofocus class="form-control temp-input" id="tempTitle" maxlength="15">
+                        <br>
+                        <label class="col-form-label" style="font-size: 16px;">模板描述</label>
+                        <textarea class="form-control temp-textarea" rows="5" id="tempSum" maxlength="100"></textarea>
+                    </div>
+                    <div style="color: #f36f12;margin: 10px 0 0 362px">
+                        cue:发布后预计1-7天审核完毕
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer temp-foot">
+                <button type="button" class="btn btn-primary" id="tempSureBut"></button>
+            </div>
+            <input type="text" hidden autofocus class="form-control" id="tempUrl">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="suggestionsorfeedback" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static"
+     data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px;max-width: 600px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">建议/反馈</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group" style="flex-wrap: wrap;justify-content: center;display: block;">
+                        <label class="col-form-label" style="font-size: 16px;">联系邮箱：</label>
+                        <input type="text" class="form-control temp-input" id="email" placeholder="请输入邮箱">
+<br>
+                        <label class="col-form-label" style="font-size: 16px;">建议/反馈：</label>
+                        <textarea class="form-control temp-textarea" rows="5" id="suggestions" maxlength="200" placeholder="在此输入您的建议或者反馈信息"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer temp-foot">
+                <button type="button" class="btn btn-primary" id="sengEmail">发送反馈</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    App.main();
+</script>
+</body>
+</html>

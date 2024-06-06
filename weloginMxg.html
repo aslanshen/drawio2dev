@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login....</title>
+</head>
+<body>
+</body>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js" charset="utf-8"></script>
+<script src="page/js/address.js"></script>
+<script>
+$(function(){
+    var url = window.location.href;
+    if (url.split('?')[1].split('=')[0] != "uid") {
+        localStorage.setItem("authorization", getUrlParam("Authorization"));
+        new Address().ajax('', "/user/getUserInfo", "get", "json", "", function (res) {
+                if (res.datas != null) {
+                    let mobile = res.datas.mobile;
+                    let uname = res.datas.username;
+                    localStorage.setItem('mobile', mobile);
+                    localStorage.setItem("uname", uname);
+                    localStorage.setItem("isvip", res.datas.isVip);
+                    localStorage.setItem("grade", res.datas.grade);
+                    localStorage.setItem("member", res.datas.member);
+                    localStorage.setItem("memory", res.datas.memory);
+                }
+                if (res.resp_code == 0) {
+                    try{
+                        document.domain='sangerbox.com'
+                        if(window.parent.location.href.indexOf("test2.sangerbox.com")>=0||window.parent.location.href.indexOf("vip.sangerbox.com")>=0){
+                            location.href="http://"+location.host+"/myFile.html";
+                        }else{
+                            top.location.href="http://"+location.host+"/myFile.html";
+                        }
+                    }catch(e){
+                        console.log("出错了")
+                        top.location.href="http://"+location.host+"/myFile.html";
+                    }
+                }else{
+                    alert("登录失败");
+                    window.location.replace("http://"+location.host+"/login.html")
+                }
+            }
+        )
+    } else {
+        var r = confirm("此微信尚未绑定手机号,点击确定,前往绑定");
+        if (r == true) {
+            top.location.href="http://vip.sangerbox.com/weLogin.html?uid="+getUrlParam("uid")+"&callback=http://"+location.host;
+        } else {
+            alert("登录失败");
+            window.location.replace("http://"+location.host+"/login.html")
+        }
+    }
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]);
+        return null; //返回参数值
+    }
+
+})
+</script>
+</html>

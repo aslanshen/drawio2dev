@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="js/jquery-1.9.1.min.js"></script>
+
+</head>
+<!-- 结 构 代 码 -->
+
+<body class="layui-layout-body pear-admin">
+
+<script src="bootstrap/js/stomp.js"></script>
+    <script src="bootstrap/js/sockjs.js"></script>
+    <script type="text/javascript">
+
+function init(){
+    if (typeof WebSocket == 'undefined') {
+        console.log('浏览器不支持同步编辑功能，请使用更高版本的浏览器，不然部分功能无法使用')
+    }
+    var ws = new WebSocket("ws://192.168.31.250:15674/ws");
+    client = Stomp.over(ws);
+    client.heartbeat.incoming = 0;
+    var on_connect = function() {
+        client.subscribe(`/exchange/mxgraph_cooperate/adbgfbg`, function(data) {
+            var msg = data.body;
+                console.log(msg)
+        });
+    };
+
+    client.connect('web', 'web', on_connect, function() {
+        console.log("连接丢失,重新连接")
+       init();
+    }, '/');
+}
+init();
+
+
+
+    </script>
+
+</body>
+
+</html>

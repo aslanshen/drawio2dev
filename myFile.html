@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>我的文件 - BioVisArt</title>
+    <meta name="description" content="桑格绘图是免费的在线图表软件，用于在线制作生物图">
+    <meta name="keywords" content="生物图,生物图表，在线，生物图制作器,生物图制作,桑格绘图">
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/diagramly/globalSettings.js"></script>
+    <link href="page/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="page/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="bootstrap/js/toastr.min.js" rel="stylesheet"></script>
+    <link href="bootstrap/css/toastr.min.css" rel="stylesheet">
+    <link href="page/css/file.css" rel="stylesheet">
+    <link href="page/css/product.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../img/sangerbox/yjdslogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+</head>
+<body>
+    <style>
+        body>div{
+            margin-top: 0px!important;
+        }
+        
+        .swiper {
+      width: 100%;
+      /* height: 345px; */
+      padding-top: 20px;
+      padding-bottom: 20px;
+      
+    }
+    </style>
+<script type="text/javascript" src="page/js/head.js"></script>
+<script type="text/javascript" src="page/js/chart.js"></script>
+<div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2 mb-4" style="padding-right: 0;">
+                        <div class="card  mb-4">
+                            <div class="card-body">
+                                <div>
+                                    <ul class="list-group">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary" data-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    style="border-radius: .25rem;">
+                                                新&nbsp;建
+                                            </button>
+                                            <div class="dropdown-menu new-built" x-placement="bottom-start">
+                                                <a class="dropdown-item btn_file" href="#">新建文件夹</a>
+                                                <a class="dropdown-item btn_file" href="#">新建生物图</a>
+                                            </div>
+                                        </div>
+                                        <li class="list-group-item change-checked font-weight-bold">
+                                            <img src="/page/img/myFile.svg"> &nbsp;我的文件
+                                        </li>
+                                        <li class="list-group-item change-checked">
+                                            <img src="/page/img/collaboration.svg"> &nbsp;共同协作
+                                        </li>
+                                        <li class="list-group-item change-checked">
+                                            <img src="/page/img/recy.svg"> &nbsp;回收站
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-10 ">
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div class="myFile">
+                                    <div class="table-responsive overflow-y: hidden">
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item active allFile" aria-current="page">全部文件>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <table class="table allTable table-hover" style="white-space: nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">项目预览</th>
+                                                <!-- <th scope="col">归属者</th>
+                                                <th scope="col">修改日期</th> -->
+                                            </tr>
+                                            </thead>
+                                            <tbody style="display: flex;">
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive overflow-y: hidden">
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb2">
+                                                <li class="breadcrumb-item active" aria-current="page">回收站</li>
+                                            </ol>
+                                        </nav>
+                                        <table class="table recTable table-hover" style="white-space: nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">文件名</th>
+                                                <th scope="col">删除日期</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="table-responsive overflow-y: hidden">
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb3">
+                                                <li class="breadcrumb-item active allFile" aria-current="page">共同协作>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                        <table class="table coopTable table-hover" style="white-space: nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">项目预览</th>
+                                                <!-- <th scope="col">归属者</th>
+                                                <th scope="col">最后修改时间</th> -->
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createFileMModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false"  aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createFileTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="return false;">
+                    <div class="form-group">
+                        <label for="fileName" class="col-form-label" id="createFileCall"></label>
+                        <input type="text" autofocus class="form-control" id="fileName" maxlength="15">
+                        <input type="text" autofocus class="form-control" id="fileUrl" hidden>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="createFileSureBut">确 定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="moveFileModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false"  aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">移动至目录</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  action="return false;">
+                    <div class="form-group">
+                        <input type="text" autofocus class="form-control" id="clickUrl" hidden>
+                        <label for="exampleFormControlSelect1" class="col-form-label">目录 </label>
+                        <select class="form-control move-folder" id="exampleFormControlSelect1" data-live-search="true">
+
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="moveFileSureBut">确 定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="coopModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top: 278px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加协作成员</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="return false;">
+                    <div class="form-group">
+                        <label for="fileName" class="col-form-label">邀请成员</label>
+                        <input type="text" autofocus class="form-control" id="coopName" maxlength="11">
+
+                        <button type="button" class="btn btn-primary" id="coopSureBut">确 定</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="">
+                    <table class="coopTeam table-striped">
+                        <label for="fileName" class="">协作成员</label>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input type="text" hidden autofocus class="form-control" id="coopId">
+</div>
+
+<div class="modal fade" id="tempModal" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true" >
+    <div class="modal-dialog" role="document" style="margin-top: 278px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">发布模板</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="return false;">
+                    <div class="form-group" style="flex-wrap: wrap;justify-content: center;">
+                        <label for="fileName" class="col-form-label">标题</label>
+                        <input type="text" autofocus class="form-control" id="tempTitle" maxlength="15">
+                        <br>
+                        <label class="col-form-label">图片</label>
+                        <div style="min-width: 397px;">
+                            <input class="form-control" name="pic" type="file" onchange="imgChange(this)"
+                                   accept=".jpg,.png,.jpeg"/>
+                            <img class="temp-img" width="300px" src="page/img/up.svg" alt="">
+                            <span style="color: #aba8a8">导出PNG或JPG图片进行上传</span>
+                        </div>
+                        <label for="fileName" class="col-form-label">描述</label>
+                        <textarea class="form-control" rows="5" id="tempSum" maxlength="100"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="tempSureBut">确 定</button>
+            </div>
+            <input type="text" hidden autofocus class="form-control" id="tempUrl">
+            <input type="text" hidden autofocus class="form-control" id="tempFileId">
+        </div>
+    </div>
+</div>
+
+
+<script src="page/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="page/vendor/chart.js/Chart.min.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="page/js/address.js"></script>
+<script src="page/js/file.js"></script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"> </script>
+</body>
+
+</html>

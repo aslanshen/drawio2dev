@@ -1,0 +1,223 @@
+.recTable td, .recTable th, .table td, .table th {
+    padding: 0.45rem;
+    vertical-align: middle;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.list-group-item {
+    border: 0px solid rgba(0, 0, 0, .125);
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    border-radius: 8px;
+    background-color: #9a9a9a1a;
+}
+
+.new-built {
+    position: absolute;
+    will-change: transform;
+    top: 0px;
+    left: 0px;
+    transform: translate3d(0px, 38px, 0px);
+}
+
+.new-built a {
+    height: 35px;
+    line-height: 26px;
+}
+
+.myFile {
+    display: flex;
+    min-height: 790px;
+}
+
+/*.myFile > div:nth-child(1) {*/
+/*    width: 157px;*/
+/*    margin: 4px 45px;*/
+/*}*/
+
+.myFile > div:nth-child(1), .myFile > div:nth-child(2), .myFile > div:nth-child(3) {
+    width: 1636px;
+}
+
+.recTable > tbody > tr > td > img, .table > tbody > tr > td > img {
+    width: 20px
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.myFile table tbody {
+    display: block;
+    height: 700px;
+    overflow-y: auto;
+}
+
+table thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+tbody tr span {
+    display: none;
+    float: right;
+}
+
+
+.allFile, .examine, .examineCoop, .coopTeam > tbody > tr span, tbody tr svg {
+    cursor: pointer;
+}
+
+
+.btn-list-group {
+    position: relative;
+}
+
+.btn-list-area {
+    width: 90px;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: -32px;
+    right: 0;
+}
+
+.coopTeam > tbody > tr:hover span, .btn-list-group:hover .btn-list-area {
+    display: block;
+}
+
+.btn-list-area > a {
+    padding: 9px;
+    text-align: center;
+}
+
+.btn-list-area > a:hover {
+    background-color: #d8d8d8;
+}
+
+.modal-header {
+    padding: 0.5rem 1rem;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 0;
+}
+
+.col-form-label {
+    margin-right: 11px;
+}
+
+.form-control {
+    width: 85%;
+}
+
+.modal-footer {
+    padding: 0.6rem 1rem;
+}
+
+.recTable thead th, .table thead th {
+    border-bottom: 0px solid #dee2e6;
+}
+
+.table tbody tr td:nth-child(2), .table tbody tr td:nth-child(3), .table tbody tr td:nth-child(4), .table thead tr th:nth-child(4), .table thead tr th:nth-child(2), .table thead tr th:nth-child(3) {
+    /*width: 350px;*/
+}
+
+.recTable tbody tr td:nth-child(2), .recTable thead tr th:nth-child(2) {
+    /*width: 600px;*/
+}
+
+.breadcrumb, .breadcrumb2, .breadcrumb3 {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    font-size: 15px;
+    flex-wrap: wrap;
+    padding: .35rem 1rem;
+    margin-bottom: 0rem;
+    list-style: none;
+    background-color: #f9fcff;
+    border-radius: .25rem;
+}
+
+.otherFile > a {
+    color: #8a8a8a;
+}
+
+.otherFile > a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+#coopName {
+    margin-right: 11px;
+    width: 67%;
+}
+
+#tempTitle {
+    margin-bottom: 11px;
+}
+
+.temp-img {
+    margin-bottom: 10px;
+    width: 138px;
+    height: 121px;
+}
+
+.form-group input[type="file"] {
+    height: 120px;
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    top: 64px;
+    margin-bottom: 12px;
+}
+
+.fb-img {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: gray;
+    display: inline-block;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    text-align: left;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .col-lg-2 {
+        flex: 0 0 16.66667%;
+        max-width: 13.66667%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-10 {
+        flex: 0 0 83.33333%;
+        max-width: 86.33333%;
+    }
+}
+#content-wrapper{
+    margin-top: 21px;
+    background-color: #f1f1f1!important;
+}
+
+
